@@ -1,6 +1,6 @@
 package com.larrysss.accounting.controllers;
 
-import com.larrysss.accounting.converter.c2s.UserInfoConverter;
+import com.larrysss.accounting.converter.c2s.UserInfoC2SConverter;
 import com.larrysss.accounting.manager.UserInfoManager;
 import com.larrysss.accounting.model.service.UserInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class UserController {
     private final UserInfoManager userInfoManager;
-    private final UserInfoConverter userInfoConverter;
+    private final UserInfoC2SConverter userInfoC2SConverter;
 
     @Autowired
-    public UserController(final UserInfoManager userInfoManager, final UserInfoConverter userInfoConverter) {
+    public UserController(final UserInfoManager userInfoManager, final UserInfoC2SConverter userInfoC2SConverter) {
         this.userInfoManager = userInfoManager;
-        this.userInfoConverter = userInfoConverter;
+        this.userInfoC2SConverter = userInfoC2SConverter;
     }
 
     @GetMapping("/{id}")
     public UserInfo getUserInfoByUserId(@PathVariable("id") Long userId) {
         val userInfo = userInfoManager.getUserInfoByUserId(userId);
-        return userInfoConverter.convert(userInfo);
+        return userInfoC2SConverter.convert(userInfo);
     }
 }
